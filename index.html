@@ -1,0 +1,59 @@
+<html>
+<head>
+<script src="https://unpkg.com/react@15/dist/react.min.js"> </script><script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js">
+</script>
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        class Hello extends React.Component {
+
+            constructor(props) {
+                super(props);
+                this.state = {
+                    isLoaded: false,
+                    message: "",
+                    error: null
+                };
+            }
+
+            // On load, hooks into the JSON end point and sets its message
+            // Maybe a better way to access the URL, since this file will have to be changed if the port number changes
+            componentDidMount() {
+                fetch("http://localhost:3000/json")
+                  .then(res => res.json())
+                  .then(
+                    (result) => {
+                      this.setState({
+                        isLoaded: true,
+                        message: result.message
+                      });
+                    },
+                    // Note: it's important to handle errors here
+                    // instead of a catch() block so that we don't swallow
+                    // exceptions from actual bugs in components.
+                    (error) => {
+                      this.setState({
+                        isLoaded: true,
+                        error
+                      });
+                    }
+                  )
+             }
+
+            render() {
+                return <h1>{this.state.message}</h1>;
+            }
+        }
+
+        ReactDOM.render(
+            <Hello />,
+            document.getElementById("root")
+        );
+
+    </script>
+</body>
+</html>
