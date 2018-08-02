@@ -10,3 +10,5 @@ The key files are:
 
 `app.js` - the back end
 `index.html` - the front end
+
+Runs on port 3000, just go to localhost:3000 for the html page to load

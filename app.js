@@ -1,7 +1,7 @@
-var express = require('express');
+const express = require('express');
+const app = express();
 
-var app = express();
-
+// Display the html page at the root
 app.get('/', function (req, res) {
      res.sendFile(__dirname + '/index.html');
 });
@@ -10,7 +10,12 @@ app.get('/', function (req, res) {
 // Returns { message: "Hello Alex" }
 app.get('/json', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({ message: "Hello Alex!" }));
+
+    const possibleNames = [ "Alex", "Snowy", "Boyle" ];
+    const randomName = possibleNames[Math.floor(Math.random()*possibleNames.length)];
+    const message = "Hello " + randomName + "!";
+
+    res.send(JSON.stringify({ "message": message }));
 });
 
 app.listen(3000, function () {
